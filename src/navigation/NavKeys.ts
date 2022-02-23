@@ -5,6 +5,7 @@
 const NavKeys = {
     HOME: 'Home',
     SCANNER : 'Scanner',
+    PDF_VIEW : 'PdfView'
 }
 
 export default NavKeys;
