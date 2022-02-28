@@ -27,7 +27,7 @@ const ModalComponent = ({...props}) =>{
     const renderModalContent = () => {
         return(
             <View style={styles.modalContainer}>
-                <Text>
+                <Text style={{color:'red'}}>
                     {qrResult?.values?.toString()}
                 </Text>
                 <Button style={styles.buttonStyles} text='Close' onPress={onDismiss} />
