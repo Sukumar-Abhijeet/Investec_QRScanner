@@ -9,9 +9,10 @@ import Button from '../../Components/atoms/button';
 import { detectQRFromImg } from '../../utils/qrHelpers';
 import ScreenInfo from '../../utils/deviceHelper';
 import ModalComponent from '../Home/modal';
+import Toast from 'react-native-simple-toast';
 
 const barThickness = 20;
-const topThickNess = 80;
+const topThickNess = 140;
 
 const PdfViewSurface = ({...props}) =>{
 
@@ -30,8 +31,11 @@ const PdfViewSurface = ({...props}) =>{
             const qrResult = await detectQRFromImg(IMG_PATH, true);
             console.log('qrResult',qrResult);
             if(qrResult){
-                setQrResult(qrResult);
-                setVisible(true);
+                if(qrResult.values.length){
+                    setQrResult(qrResult);
+                    setVisible(true);
+                }
+                else Toast.show('No QR code detected, please try again');
             }
         }
         catch(e){
@@ -58,15 +62,10 @@ const PdfViewSurface = ({...props}) =>{
                     onLoadComplete={(numberOfPages,filePath) => {
                         console.log(`Number of pages: ${numberOfPages}`);
                     }}
-                    // onPageChanged={(page,numberOfPages) => {
-                    //     console.log(`Current page: ${page}`);
-                    // }}
                     onError={(error) => {
                         console.log(error);
                     }}
-                    // onPressLink={(uri) => {
-                    //     console.log(`Link pressed: ${uri}`);
-                    // }}
+                    maxScale={8}
                     style={styles.pdf}/>
             </ViewShot>
             <View style={styles.borderBar} />
@@ -95,13 +94,13 @@ const styles = StyleSheet.create({
     borderBar:{
         width : ScreenInfo.SCREEN_WIDTH,
         height : topThickNess,
-        backgroundColor : '#ebebeb',
+        backgroundColor : '#000',
         position : 'absolute',
     },
     borderBarVertical:{
         width : barThickness,
         height : ScreenInfo.SCREEN_HEIGHT,
-        backgroundColor : '#ebebeb',
+        backgroundColor : '#000',
         position : 'absolute',
     }
 });
